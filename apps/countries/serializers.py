@@ -7,4 +7,4 @@ class CountrySerializer(ModelSerializer):
 
     class Meta:
         model = Country
-        fields = ['id', 'name', 'code']
+        fields = ['id', 'name', 'code2', 'code3']
