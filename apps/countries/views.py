@@ -14,6 +14,7 @@ class CountryDetail(RetrieveAPIView):
     model = Country
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
+    lookup_field = 'code2'
 
 
 
@@ -32,13 +33,14 @@ class CountryKml(DetailView):
         return self.render_to_response(context, content_type=content_type)
 
 
-class CountryGeoJson(DetailView):
+class CountryGeoJson(RetrieveAPIView):
     model = Country
+    queryset = Country.objects.all()
+    serializer_class = CountrySerializer
+    lookup_field = 'code2'
 
-    def get(self, request, *args, **kwargs):
-        super(CountryGeoJson, self).get(request, *args, **kwargs)
-        context = self.get_context_data()
-        country = context['country']
-        return HttpResponse(country.geojson, content_type='application/json')
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        return HttpResponse(instance.geojson, content_type='application/json')
 
 

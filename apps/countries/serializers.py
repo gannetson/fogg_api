@@ -1,10 +1,12 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from apps.countries.models import Country
 from apps.users.models import User
 
 
-class CountrySerializer(ModelSerializer):
+class CountrySerializer(serializers.ModelSerializer):
+
+    id = serializers.CharField(source='code2')
 
     class Meta:
         model = Country
-        fields = ['id', 'name', 'code2', 'code3']
+        fields = ['id', 'name']

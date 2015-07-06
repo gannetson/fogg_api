@@ -13,8 +13,8 @@ urlpatterns = patterns('',
     url(r'^api/users/(?P<pk>\d+)', UserDetail.as_view(), name='user-detail'),
 
     url(r'^api/countries/$', CountryList.as_view(), name='country-list'),
-    url(r'^api/countries/(?P<pk>\d+)', CountryDetail.as_view(), name='country-detail'),
+    url(r'^api/countries/(?P<code2>\w+)', CountryDetail.as_view(), name='country-detail'),
 
-    url(r'^kml/(?P<pk>\d+)', CountryKml.as_view(), name='country-kml'),
-    url(r'^geojson/(?P<pk>\d+)', CountryGeoJson.as_view(), name='country-geo-json')
+    url(r'^kml/(?P<code2>\w+)', CountryKml.as_view(), name='country-kml'),
+    url(r'^geojson/(?P<code2>\w+)', CountryGeoJson.as_view(), name='country-geo-json')
 )
