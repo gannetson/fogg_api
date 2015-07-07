@@ -13,3 +13,15 @@ class UserDetail(RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsCurrentUserOrReadOnly, )
+
+
+class CurrentUserDetail(RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        if not self.request.user:
+            return User.objects.none()
+        return self.request.user
+
+
