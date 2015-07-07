@@ -12,4 +12,4 @@ class UserList(ListCreateAPIView):
 class UserDetail(RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (IsCurrentUserOrReadOnly, )
