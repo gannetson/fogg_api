@@ -20,8 +20,8 @@ class CurrentUserDetail(RetrieveUpdateAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
-        if not self.request.user:
-            return User.objects.none()
+        if not self.request.user.is_authenticated():
+            return None
         return self.request.user
 
 
