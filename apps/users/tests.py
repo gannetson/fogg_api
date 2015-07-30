@@ -1,16 +1,28 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
-from django.test import TestCase
+from django.core.urlresolvers import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
+from apps.users.factories import UserFactory, UserCountryFactory
 
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
+class UserTests(APITestCase):
+
+    def test_empty_user_list(self):
         """
-        Tests that 1 + 1 always equals 2.
+        Test the user list
         """
-        self.assertEqual(1 + 1, 2)
+        url = reverse('user-list')
+        response = self.client.get(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 0)
+
+    def test_user_list(self):
+        """
+        Test the user list
+        """
+        url = reverse('user-list')
+        users = UserFactory.create_batch(4)
+        UserCountryFactory.create_batch(15, user=users[0])
+
+        response = self.client.get(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 4)
